@@ -2,11 +2,8 @@ package com.example.android_e_learning.ui.home;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.content.Intent;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,31 +15,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.android_e_learning.Course;
 import com.example.android_e_learning.GetByURL;
 import com.example.android_e_learning.Material;
+import com.example.android_e_learning.R;
 import com.example.android_e_learning.Teacher;
 import com.example.android_e_learning.adapter.AdapterHolder;
-import com.example.android_e_learning.Course;
-import com.example.android_e_learning.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
 @SuppressLint("NewApi")
-public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class HomeFragment extends Fragment {
     AdapterHolder adapter;
-
 
     @SuppressLint("NewApi")
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -51,8 +40,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        ArrayList<Course> list = new ArrayList<>();
         String tmp = GetByURL.readParse("http://47.94.107.165:8080/elearn/courses");
+        ArrayList<Course> list = new ArrayList<>();
 
         try {
             list = Analysis(tmp);
@@ -100,23 +89,23 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             String certificationDuration = jsonObject.getString("certificationDuration");
 
             String mediaString = GetByURL.readParse("http://tang5618.com:8080/elearn/courses/" + id + "/materials");
-            ArrayList<Material> materials=new ArrayList<Material>();
-            JSONArray mediaJson=new JSONArray(mediaString);
-            if(mediaJson.length() != 0) {
-                for(int k=0;k<mediaJson.length();k++) {
-                    JSONObject material=mediaJson.getJSONObject(k);
-                    String mid=material.getString("id");
-                    int mediaType=-1;
-                    String tmpType=material.getString("materialType");
+            ArrayList<Material> materials = new ArrayList<Material>();
+            JSONArray mediaJson = new JSONArray(mediaString);
+            if (mediaJson.length() != 0) {
+                for (int k = 0; k < mediaJson.length(); k++) {
+                    JSONObject material = mediaJson.getJSONObject(k);
+                    String mid = material.getString("id");
+                    int mediaType = -1;
+                    String tmpType = material.getString("materialType");
                     if (tmpType.equals("video"))
-                        mediaType=0;
-                    String materialType=material.getString("materialType");
-                    String materialUrl="http:tang5618.com:8080/elearn/materials/"+mid+"/media";
-                    String createDate=material.getString("createDate");
-                    String mdescription=material.getString("description");
-                    int mstatus=Integer.parseInt(material.getString("status"));
+                        mediaType = 0;
+                    String materialType = material.getString("materialType");
+                    String materialUrl = "http:tang5618.com:8080/elearn/materials/" + mid + "/media";
+                    String createDate = material.getString("createDate");
+                    String mdescription = material.getString("description");
+                    int mstatus = Integer.parseInt(material.getString("status"));
 
-                    materials.add(new Material(mid,id,mediaType,materialType,materialUrl,createDate,mdescription,mstatus));
+                    materials.add(new Material(mid, id, mediaType, materialType, materialUrl, createDate, mdescription, mstatus));
 
                 }
             }
@@ -140,23 +129,11 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
             Course c = new Course(Course.SECOND_TYPE, id, name, code, categoryId, description, price,
                     status, openDate, lastUpdate, level, shared, sharedUrl, avatar,
-                    bigAvatar, certification, certificationDuration, arrayList,materials);
+                    bigAvatar, certification, certificationDuration, arrayList, materials);
 
             list.add(c);
         }
         return list;
-    }
-
-
-    @Override
-    public void onRefresh() {
-
-
-    }
-
-    private void onLoadingSwipeRefresh(final String keyword) {
-
-
     }
 
 

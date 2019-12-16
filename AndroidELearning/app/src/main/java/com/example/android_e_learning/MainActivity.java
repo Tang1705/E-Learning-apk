@@ -3,6 +3,7 @@ package com.example.android_e_learning;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -33,10 +34,15 @@ public class MainActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
+        final SharedPreferences sharedPreferences = getSharedPreferences("is_first_in_data", MODE_PRIVATE);
+        final MySharedPreferences mySharedPreferences=MySharedPreferences.getSharedPreferences(sharedPreferences);
+        mySharedPreferences.setIsFirstLogInOne();
+
         signInButton = (Button) findViewById(R.id.sign_in);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mySharedPreferences.setIsFirstLogInTwo();
                 Intent intent = new Intent(MainActivity.this, ListCourseActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);

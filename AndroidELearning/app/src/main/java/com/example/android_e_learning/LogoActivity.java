@@ -10,13 +10,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 
 public class LogoActivity extends AppCompatActivity {
-    Boolean isFirstIn = true;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -31,7 +29,8 @@ public class LogoActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
         final SharedPreferences sharedPreferences = getSharedPreferences("is_first_in_data", MODE_PRIVATE);
-        isFirstIn = sharedPreferences.getBoolean("isFirstIn", true);
+        final MySharedPreferences mySharedPreferences=MySharedPreferences.getSharedPreferences(sharedPreferences);
+        mySharedPreferences.setIsFirstInOne();
 
         final LinearLayout tv_lin = (LinearLayout) findViewById(R.id.text_lin);//要显示的字体
         final LinearLayout tv_hide_lin = (LinearLayout) findViewById(R.id.text_hide_lin);//所谓的布
@@ -58,18 +57,25 @@ public class LogoActivity extends AppCompatActivity {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        System.out.println(isFirstIn);
-                        if (isFirstIn) {
-                            sharedPreferences.edit().putBoolean("isFirstIn",false).apply();
+                        if (mySharedPreferences.getIsFirstIn()) {
+                            mySharedPreferences.setIsFirstInTwo();
                             Intent intent = new Intent(LogoActivity.this, SplashActivity.class);
                             startActivity(intent);
-                            overridePendingTransition(R.anim.out_alpha, R.anim.out_alpha);
+                            overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
                             finish();
                         } else {
+                            if(mySharedPreferences.getIsFirstLogIn()){
                             Intent intent = new Intent(LogoActivity.this, MainActivity.class);
                             startActivity(intent);
-                            overridePendingTransition(R.anim.out_alpha, R.anim.out_alpha);
+                            overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
                             finish();
+                            } else {
+                                Intent intent = new Intent(LogoActivity.this, ListCourseActivity.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
+                                finish();
+
+                            }
                         }
                     }
 
