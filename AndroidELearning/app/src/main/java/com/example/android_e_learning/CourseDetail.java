@@ -2,6 +2,7 @@ package com.example.android_e_learning;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class CourseDetail extends AppCompatActivity {
     private View layout;
     private FadingScrollView fadingScrollView;
     private ImageButton backButton;
+    private ImageButton shareButton;
     private Toolbar toolbar;
     private TextView courseName;
 
@@ -45,6 +47,23 @@ public class CourseDetail extends AppCompatActivity {
             getWindow().setNavigationBarColor(Color.TRANSPARENT);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
+
+        shareButton = (ImageButton) findViewById(R.id.share);
+        shareButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Share");
+                intent.putExtra(Intent.EXTRA_TEXT, "This is the share from E-Learn !");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(Intent.createChooser(intent, "Please select the destination to share."));
+            }
+
+        });
+
 
         backButton = findViewById(R.id.back);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +84,37 @@ public class CourseDetail extends AppCompatActivity {
         fadingScrollView = (FadingScrollView) findViewById(R.id.nac_root);
         fadingScrollView.setFadingView(layout);
         fadingScrollView.setFadingHeightView(findViewById(R.id.nac_image));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        MenuItem searchMenuItem = menu.findItem(R.id.action_search);
+
+        assert searchManager != null;
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setQueryHint("Search Latest Courses...");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (query.length() > 2) {
+                    //onLoadingSwipeRefresh(query);
+                } else {
+                    //Toast.makeText(ListCourseActivity.this, "Type more than two letters!", Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        searchMenuItem.getIcon().setVisible(false, false);
+        return true;
     }
 
 }
