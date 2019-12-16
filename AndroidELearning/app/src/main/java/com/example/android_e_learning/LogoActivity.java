@@ -29,6 +29,10 @@ public class LogoActivity extends AppCompatActivity {
         //透明状态栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+
+        final SharedPreferences sharedPreferences = getSharedPreferences("is_first_in_data", MODE_PRIVATE);
+        isFirstIn = sharedPreferences.getBoolean("isFirstIn", true);
+
         final LinearLayout tv_lin = (LinearLayout) findViewById(R.id.text_lin);//要显示的字体
         final LinearLayout tv_hide_lin = (LinearLayout) findViewById(R.id.text_hide_lin);//所谓的布
         ImageView logo = (ImageView) findViewById(R.id.image);//图片
@@ -54,9 +58,9 @@ public class LogoActivity extends AppCompatActivity {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        final SharedPreferences sharedPreferences = getSharedPreferences("is_first_in_data", MODE_PRIVATE);
-                        isFirstIn = sharedPreferences.getBoolean("isFirstIn", true);
+                        System.out.println(isFirstIn);
                         if (isFirstIn) {
+                            sharedPreferences.edit().putBoolean("isFirstIn",false).apply();
                             Intent intent = new Intent(LogoActivity.this, SplashActivity.class);
                             startActivity(intent);
                             overridePendingTransition(R.anim.out_alpha, R.anim.out_alpha);

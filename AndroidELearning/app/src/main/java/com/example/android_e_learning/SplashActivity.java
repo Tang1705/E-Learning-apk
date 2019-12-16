@@ -3,7 +3,7 @@ package com.example.android_e_learning;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -77,6 +77,7 @@ public class SplashActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(SplashActivity.this,MainActivity.class);
+                startActivity(intent);
                 overridePendingTransition(R.anim.out_alpha, R.anim.out_alpha);
                 finish();
             }
