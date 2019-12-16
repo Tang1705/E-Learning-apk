@@ -9,20 +9,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
-
+import android.widget.Toast;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.snackbar.Snackbar;
+import com.tencent.tauth.UiError;
+import org.json.JSONObject;
 
 
 @SuppressLint("Registered")
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements QQLogInManager.QQLoginListener{
 
     Button signInButton;
     Button logInButton;
     TextView forget_password;
+    private QQLogInManager qqLoginManager;
+    ImageButton qqButton;
+    ImageButton weiboButton;
+    ImageButton wechatButton;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -73,7 +79,56 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        qqLoginManager = new QQLogInManager("app_id", this);
+        qqButton=findViewById(R.id.qq);
+        qqButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mySharedPreferences.setIsFirstLogInTwo();
+                qqLoginManager.launchQQLogin();
+            }
+        });
+
+        weiboButton = (ImageButton)findViewById(R.id.weibo);
+        weiboButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"This will be developed in " +
+                        "the future !",Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        wechatButton =(ImageButton)findViewById(R.id.wechat);
+        wechatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"This will be developed in " +
+                        "the future !",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        // 回调
+        super.onActivityResult(requestCode, resultCode, data);
+        qqLoginManager.onActivityResultData(requestCode, resultCode, data);
+    }
 
+    @Override
+    public void onQQLoginSuccess(JSONObject jsonObject, QQLogInManager.UserAuthInfo authInfo) {
+
+    }
+
+    @Override
+    public void onQQLoginCancel() {
+
+    }
+
+    @Override
+    public void onQQLoginError(UiError uiError) {
+
+    }
 }
