@@ -1,6 +1,7 @@
 package com.example.android_e_learning;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public class LogoActivity extends AppCompatActivity {
+    Boolean isFirstIn = true;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -27,10 +29,10 @@ public class LogoActivity extends AppCompatActivity {
         //透明状态栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        final LinearLayout tv_lin= (LinearLayout) findViewById(R.id.text_lin);//要显示的字体
-        final LinearLayout tv_hide_lin= (LinearLayout) findViewById(R.id.text_hide_lin);//所谓的布
-        ImageView logo= (ImageView) findViewById(R.id.image);//图片
-        Animation animation = AnimationUtils.loadAnimation(this,R.anim.splash);
+        final LinearLayout tv_lin = (LinearLayout) findViewById(R.id.text_lin);//要显示的字体
+        final LinearLayout tv_hide_lin = (LinearLayout) findViewById(R.id.text_hide_lin);//所谓的布
+        ImageView logo = (ImageView) findViewById(R.id.image);//图片
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.splash);
         logo.startAnimation(animation);//开始执行动画
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -40,9 +42,9 @@ public class LogoActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 //第一个动画执行完后执行第二个动画就是那个字体显示那部分
-                animation= AnimationUtils.loadAnimation(LogoActivity.this,R.anim.text_splash_position);
+                animation = AnimationUtils.loadAnimation(LogoActivity.this, R.anim.text_splash_position);
                 tv_lin.startAnimation(animation);
-                animation= AnimationUtils.loadAnimation(LogoActivity.this,R.anim.text_canvas);
+                animation = AnimationUtils.loadAnimation(LogoActivity.this, R.anim.text_canvas);
                 tv_hide_lin.startAnimation(animation);
                 animation.setAnimationListener(new Animation.AnimationListener() {
                     @Override
@@ -52,9 +54,19 @@ public class LogoActivity extends AppCompatActivity {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        Intent intent=new Intent(LogoActivity.this,MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                        final SharedPreferences sharedPreferences = getSharedPreferences("is_first_in_data", MODE_PRIVATE);
+                        isFirstIn = sharedPreferences.getBoolean("isFirstIn", true);
+                        if (isFirstIn) {
+                            Intent intent = new Intent(LogoActivity.this, SplashActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.out_alpha, R.anim.out_alpha);
+                            finish();
+                        } else {
+                            Intent intent = new Intent(LogoActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.out_alpha, R.anim.out_alpha);
+                            finish();
+                        }
                     }
 
                     @Override

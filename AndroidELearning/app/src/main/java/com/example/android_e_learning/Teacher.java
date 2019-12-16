@@ -11,7 +11,7 @@ public class Teacher {
     private String userId;
     private String courseId;
     private String name;
-    private Image photo;
+    private String photo;
     private String telephone;
     private String email;
     private String description;
@@ -19,7 +19,7 @@ public class Teacher {
     public Teacher() {
     }
 
-    public Teacher(String userId, String courseId, String name, Image photo, String telephone,
+    public Teacher(String userId, String courseId, String name, String photo, String telephone,
                    String email, String description) {
 
         this.userId = userId;
@@ -44,7 +44,7 @@ public class Teacher {
         return name;
     }
 
-    public Image getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 
@@ -72,7 +72,7 @@ public class Teacher {
         this.name = name;
     }
 
-    public void setPhoto(Image photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 

@@ -3,6 +3,7 @@ package com.example.android_e_learning.ui.home;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -17,6 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.android_e_learning.GetByURL;
+import com.example.android_e_learning.Material;
+import com.example.android_e_learning.Teacher;
 import com.example.android_e_learning.adapter.AdapterHolder;
 import com.example.android_e_learning.Course;
 import com.example.android_e_learning.R;
@@ -31,6 +35,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
@@ -47,8 +52,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         ArrayList<Course> list = new ArrayList<>();
-        String tmp = readParse("http://47.94.107.165:8080/elearn/courses");
-        System.out.println(tmp);
+        String tmp = GetByURL.readParse("http://47.94.107.165:8080/elearn/courses");
 
         try {
             list = Analysis(tmp);
@@ -65,32 +69,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         return recyclerView;
     }
 
-    @SuppressLint("ObsoleteSdkInt")
-    private static String readParse(String urlPath) {
-        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-        byte[] data = new byte[1024];
-        int len = 0;
-        URL url;
-        try {
-            url = new URL(urlPath);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            if (android.os.Build.VERSION.SDK_INT > 9) {
-                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                StrictMode.setThreadPolicy(policy);}
-            InputStream inStream = conn.getInputStream();
-            while ((len = inStream.read(data)) != -1) {
-                outStream.write(data, 0, len);
-            }
-            inStream.close();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        String a = new String(outStream.toByteArray());//通过out.Stream.toByteArray获取到写的数据
-        return a;
-    }
-
     private static ArrayList<Course> Analysis(String jsonStr)
             throws JSONException {
         JSONArray jsonArray = null;
@@ -99,30 +77,70 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         jsonArray = new JSONArray(jsonStr);
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
-            // 初始化map数组对象
-            String id=jsonObject.getString("id");
-            String name=jsonObject.getString("name");
-            String code=jsonObject.getString("code");
-            String categoryId=jsonObject.getString("categoryId");
-            String description=jsonObject.getString("description");
-            int price= Integer.parseInt(jsonObject.getString("price"));
-            String tmp=jsonObject.getString("status");
-            int status=-1;
-            if(tmp.equals("open")) status=1;
-            String openDate=jsonObject.getString("openDate");
-            String lastUpdate=jsonObject.getString("lastUpdateOn");
-            String _tmp=jsonObject.getString("level");
-            int level=-1;
-            if(_tmp.equals("basic")) level=1;
-            int shared=Integer.parseInt(jsonObject.getString("shared"));
-            String sharedUrl=jsonObject.getString("sharedUrl");
-            String avatar="http://47.94.107.165:8080/elearn/courses/"+id+"/photo";
-            String bigAvatar=null;
-            String certification=jsonObject.getString("certification");
-            String certificationDuration=jsonObject.getString("certificationDuration");
-            Course c = new Course(Course.SECOND_TYPE, id, name, code,  categoryId,  description,  price,
-            status,  openDate,  lastUpdate, level,  shared,  sharedUrl, avatar,
-                     bigAvatar,  certification,  certificationDuration);
+
+            String id = jsonObject.getString("id");
+            String name = jsonObject.getString("name");
+            String code = jsonObject.getString("code");
+            String categoryId = jsonObject.getString("categoryId");
+            String description = jsonObject.getString("description");
+            int price = Integer.parseInt(jsonObject.getString("price"));
+            String tmp = jsonObject.getString("status");
+            int status = -1;
+            if (tmp.equals("open")) status = 1;
+            String openDate = jsonObject.getString("openDate");
+            String lastUpdate = jsonObject.getString("lastUpdateOn");
+            String _tmp = jsonObject.getString("level");
+            int level = -1;
+            if (_tmp.equals("basic")) level = 1;
+            int shared = Integer.parseInt(jsonObject.getString("shared"));
+            String sharedUrl = jsonObject.getString("sharedUrl");
+            String avatar = "http://47.94.107.165:8080/elearn/courses/" + id + "/photo";
+            String bigAvatar = null;
+            String certification = jsonObject.getString("certification");
+            String certificationDuration = jsonObject.getString("certificationDuration");
+
+            String mediaString = GetByURL.readParse("http://tang5618.com:8080/elearn/courses/" + id + "/materials");
+            ArrayList<Material> materials=new ArrayList<Material>();
+            JSONArray mediaJson=new JSONArray(mediaString);
+            if(mediaJson.length() != 0) {
+                for(int k=0;k<mediaJson.length();k++) {
+                    JSONObject material=mediaJson.getJSONObject(k);
+                    String mid=material.getString("id");
+                    int mediaType=-1;
+                    String tmpType=material.getString("materialType");
+                    if (tmpType.equals("video"))
+                        mediaType=0;
+                    String materialType=material.getString("materialType");
+                    String materialUrl="http:tang5618.com:8080/elearn/materials/"+mid+"/media";
+                    String createDate=material.getString("createDate");
+                    String mdescription=material.getString("description");
+                    int mstatus=Integer.parseInt(material.getString("status"));
+
+                    materials.add(new Material(mid,id,mediaType,materialType,materialUrl,createDate,mdescription,mstatus));
+
+                }
+            }
+
+            String teacherString = GetByURL.readParse("http://47.94.107.165:8080/elearn/courses/" + id + "/teachers");
+            ArrayList<Teacher> arrayList = new ArrayList<Teacher>();
+            JSONArray teacherArray = new JSONArray(teacherString);
+            for (int j = 0; j < teacherArray.length(); j++) {
+                JSONObject teacherObject = teacherArray.getJSONObject(j);
+                String userId = teacherObject.getString("userid");
+                String courseId = teacherObject.getString("courseId");
+                String teacherName = teacherObject.getString("name");
+                String photo = teacherObject.getString("photo");
+                String telephone = teacherObject.getString("telephone");
+                String email = teacherObject.getString("email");
+                String teacherDescription = teacherObject.getString("description");
+
+                Teacher aTeacher = new Teacher(userId, courseId, teacherName, photo, telephone, email, teacherDescription);
+                arrayList.add(aTeacher);
+            }
+
+            Course c = new Course(Course.SECOND_TYPE, id, name, code, categoryId, description, price,
+                    status, openDate, lastUpdate, level, shared, sharedUrl, avatar,
+                    bigAvatar, certification, certificationDuration, arrayList,materials);
 
             list.add(c);
         }

@@ -14,14 +14,15 @@ public class Material {
     private int mediaType;
     private String materialType;
     private String materialUrl;
-    private Date createDate;
+    private String createDate;
     private String description;
     private int status;
 
     public Material() {
     }
 
-    public Material(String id, String courseId, int mediaType, String materialType, String materialUrl, Date createDate, String description, int status) {
+    public Material(String id, String courseId, int mediaType, String materialType,
+                    String materialUrl, String createDate, String description, int status) {
         this.id = id;
         this.courseId = courseId;
         this.mediaType = mediaType;
@@ -72,11 +73,11 @@ public class Material {
         this.materialUrl = materialUrl;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 

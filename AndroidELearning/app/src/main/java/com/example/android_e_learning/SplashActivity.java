@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SplashActivity extends Activity {
-    Boolean isFirstIn=true;
     private List<View> datas=new ArrayList<>();
     private ViewPager vp;
     private Button button;
@@ -33,23 +32,18 @@ public class SplashActivity extends Activity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-       this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-       this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            super.onCreate(savedInstanceState);
+            this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_splash);
-        final SharedPreferences sharedPreferences=getSharedPreferences("is_first_in_data",MODE_PRIVATE);
-        isFirstIn=sharedPreferences.getBoolean("isFirstIn",true);
-        if (isFirstIn){
-            Toast.makeText(this,"第一次进入", Toast.LENGTH_SHORT).show();
-            sharedPreferences.edit().putBoolean("isFirstIn",false).commit();
-        }else {
-            Toast.makeText(this,"非第一次进入", Toast.LENGTH_SHORT).show();
-        }
-        //透明状态栏
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        initWidgets();
+            setContentView(R.layout.activity_splash);
+
+            //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            initWidgets();
+
+
     }
     //初始化控件
     private void initWidgets() {
@@ -73,16 +67,17 @@ public class SplashActivity extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(SplashActivity.this,LogoActivity.class);
+                Intent intent=new Intent(SplashActivity.this,MainActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.out_alpha, R.anim.out_alpha);
                 finish();
             }
         });
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(SplashActivity.this,LogoActivity.class);
-                startActivity(intent);
+                Intent intent=new Intent(SplashActivity.this,MainActivity.class);
+                overridePendingTransition(R.anim.out_alpha, R.anim.out_alpha);
                 finish();
             }
         });

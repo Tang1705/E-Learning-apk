@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android-E-Learning</string>
+    <string name="app_name">E-Learning</string>
     <string name="title_activity_list_course">ListCourseActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

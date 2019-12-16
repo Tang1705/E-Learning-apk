@@ -2,10 +2,12 @@ package com.example.android_e_learning.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,9 +16,13 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.android_e_learning.Course;
 import com.example.android_e_learning.CourseDetail;
+import com.example.android_e_learning.GetByURL;
+import com.example.android_e_learning.Material;
 import com.example.android_e_learning.R;
+import com.example.android_e_learning.Teacher;
 import com.example.android_e_learning.adapter.VideoAdapter;
 
 import java.util.ArrayList;
@@ -43,11 +49,12 @@ public class AdapterHolder extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         Activity activity;
         Fragment fragment;
         CardView cardView;
-        private ListView listView;
-        private int firstVisible;//当前第一个可见的item
-        private int visibleCount;//当前可见的item个数
+        ListView listView;
+        ImageView imageView;
+        TextView teacherNameView;
+        TextView numOfShared;
 
-        public FirstTypeViewHolder(@NonNull View itemView, Activity activity, Fragment fragment) {
+        FirstTypeViewHolder(@NonNull View itemView, Activity activity, Fragment fragment) {
             super(itemView);
             this.courseName = (TextView) itemView.findViewById(R.id.coursename);
             this.description = (TextView) itemView.findViewById(R.id.description);
@@ -57,11 +64,10 @@ public class AdapterHolder extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.fragment = fragment;
 
             listView = (ListView) itemView.findViewById(R.id.listview);
-            ArrayList<String> datas = new ArrayList<String>();
-            String videoUrl = "http://tang5618.com:8080/HTML/WEB/0.mp4";
-            datas.add(videoUrl);
-            VideoAdapter videoAdapter = new VideoAdapter(activity, datas, R.layout.item_video);
-            listView.setAdapter(videoAdapter);
+
+            imageView = listView.findViewById(R.id.img_video_icon);
+            teacherNameView = listView.findViewById(R.id.tv_video_userName);
+            numOfShared = listView.findViewById(R.id.tv_video_comment);
 
         }
 
@@ -137,11 +143,35 @@ public class AdapterHolder extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int listPosition) {
         Course object = dataSet.get(listPosition);
+
         if (object != null) {
             switch (object.getType()) {
                 case Course.FIRST_TYPE:
+                    ArrayList<Teacher> arrayList = object.getArrayList();
+                    String teacherId = arrayList.get(0).getUserId();
+                    String teacherName = arrayList.get(0).getName();
+                    int enrollment = object.getShared();
+                    ArrayList<Material> mArrayList = object.getmArrayList();
+
                     ((FirstTypeViewHolder) holder).courseName.setText(object.getName());
                     ((FirstTypeViewHolder) holder).description.setText(object.getDescription());
+                    Glide.with(activity).load("http://tang5618.com:8080/elearn/teachers/" + teacherId + "/photo")
+                            .into(((FirstTypeViewHolder) holder).imageView);
+                    ((FirstTypeViewHolder) holder).teacherNameView.setText(teacherName);
+                    ((FirstTypeViewHolder) holder).numOfShared.setText(String.valueOf(enrollment));
+
+                    ArrayList<String> datas = new ArrayList<String>();
+
+                    for (int m = 0; m < mArrayList.size(); m++) {
+                        if (mArrayList.get(m).getMediaType() == 0 && mArrayList.get(m).getMaterialType().equals("Lecture Video")) {
+                            String videoUrl = mArrayList.get(m).getMaterialUrl();
+                            datas.add(videoUrl);
+                        }
+                    }
+
+                    VideoAdapter videoAdapter = new VideoAdapter(activity, datas, R.layout.item_video);
+                    ((FirstTypeViewHolder) holder).listView.setAdapter(videoAdapter);
+
                     break;
                 case Course.SECOND_TYPE:
                     ((SecondTypeViewHolder) holder).courseName.setText(object.getName());

@@ -8,6 +8,8 @@ package com.example.android_e_learning;
  * "certification":"BJTU","certificationDuration":"Forever"}
  */
 
+import java.util.ArrayList;
+
 public class Course {
     public static final int FIRST_TYPE = 0;
     public static final int SECOND_TYPE = 1;
@@ -30,15 +32,19 @@ public class Course {
     private String bigAvatar;
     private String certification;
     private String certificationDuration;
+    private ArrayList<Teacher> arrayList;
+    private ArrayList<Material> mArrayList;
 
     public Course(int type) {
+        arrayList = new ArrayList<Teacher>();
 
     }
 
 
     public Course(int type, String id, String name, String code, String categoryId, String description, int price,
-                  int status, String openDate, String lastUpdate,int level, int shared, String sharedUrl, String avatar,
-                  String bigAvatar, String certification, String certificationDuration) {
+                  int status, String openDate, String lastUpdate, int level, int shared, String sharedUrl, String avatar,
+                  String bigAvatar, String certification, String certificationDuration, ArrayList<Teacher> arrayList,
+                  ArrayList<Material> mArrayList) {
         this.type = type;
         this.id = id;
         this.name = name;
@@ -49,14 +55,15 @@ public class Course {
         this.status = status;
         this.openDate = openDate;
         this.lastUpdate = lastUpdate;
-        this.level=level;
+        this.level = level;
         this.shared = shared;
         this.sharedUrl = sharedUrl;
         this.avatar = avatar;
         this.bigAvatar = bigAvatar;
         this.certification = certification;
         this.certificationDuration = certificationDuration;
-
+        this.arrayList = arrayList;
+        this.mArrayList=mArrayList;
 
     }
 
@@ -194,5 +201,21 @@ public class Course {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public ArrayList<Teacher> getArrayList() {
+        return arrayList;
+    }
+
+    public void setArrayList(ArrayList<Teacher> arrayList) {
+        this.arrayList = arrayList;
+    }
+
+    public ArrayList<Material> getmArrayList() {
+        return mArrayList;
+    }
+
+    public void setmArrayList(ArrayList<Material> mArrayList) {
+        this.mArrayList = mArrayList;
     }
 }
