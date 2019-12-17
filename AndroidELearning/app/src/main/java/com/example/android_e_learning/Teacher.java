@@ -2,12 +2,14 @@ package com.example.android_e_learning;
 
 import android.media.Image;
 
+import java.io.Serializable;
+
 /*
  * [{"userid":"1","courseId":"001","name":"Wang Hong","photo":"001\\wang.jpg",
  * "telephone":"01051690273","email":"wang@bjtu.edu","description":"android teacher"}]
  */
 
-public class Teacher {
+public class Teacher implements Serializable {
     private String userId;
     private String courseId;
     private String name;

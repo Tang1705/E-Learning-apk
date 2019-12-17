@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
                     JSONObject material = mediaJson.getJSONObject(k);
                     String mid = material.getString("id");
                     int mediaType = -1;
-                    String tmpType = material.getString("materialType");
+                    String tmpType = material.getString("mediatype");
                     if (tmpType.equals("video"))
                         mediaType = 0;
                     String materialType = material.getString("materialType");
@@ -127,7 +127,20 @@ public class HomeFragment extends Fragment {
                 arrayList.add(aTeacher);
             }
 
-            Course c = new Course(Course.SECOND_TYPE, id, name, code, categoryId, description, price,
+            int courseType = -1;
+            if (mediaString.length()!=2) {
+                if (materials.get(0).getMediaType() == 0) {
+
+                    courseType = Course.FIRST_TYPE;
+                }
+                else
+                    courseType = Course.SECOND_TYPE;
+
+            } else {
+                courseType = Course.SECOND_TYPE;
+            }
+
+            Course c = new Course(courseType, id, name, code, categoryId, description, price,
                     status, openDate, lastUpdate, level, shared, sharedUrl, avatar,
                     bigAvatar, certification, certificationDuration, arrayList, materials);
 

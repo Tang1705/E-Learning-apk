@@ -24,8 +24,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.Menu;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -34,8 +32,6 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 public class ListCourseActivity extends AppCompatActivity{
 
     private AppBarConfiguration mAppBarConfiguration;
-
-    private int pagecount = 1, pagesize = 8, totalpages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

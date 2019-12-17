@@ -8,9 +8,10 @@ package com.example.android_e_learning;
  * "certification":"BJTU","certificationDuration":"Forever"}
  */
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Course {
+public class Course implements Serializable {
     public static final int FIRST_TYPE = 0;
     public static final int SECOND_TYPE = 1;
 

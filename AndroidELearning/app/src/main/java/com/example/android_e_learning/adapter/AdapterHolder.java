@@ -1,22 +1,28 @@
 package com.example.android_e_learning.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.android_e_learning.AsynImageLoader;
 import com.example.android_e_learning.Course;
 import com.example.android_e_learning.CourseDetail;
 import com.example.android_e_learning.GetByURL;
@@ -53,8 +59,11 @@ public class AdapterHolder extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         ImageView imageView;
         TextView teacherNameView;
         TextView numOfShared;
+        ArrayList<Course> data;
 
-        FirstTypeViewHolder(@NonNull View itemView, Activity activity, Fragment fragment) {
+
+        @SuppressLint("ShowToast")
+        public FirstTypeViewHolder(@NonNull View itemView, Activity activity, Fragment fragment, ArrayList<Course> data) {
             super(itemView);
             this.courseName = (TextView) itemView.findViewById(R.id.coursename);
             this.description = (TextView) itemView.findViewById(R.id.description);
@@ -62,18 +71,21 @@ public class AdapterHolder extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             cardView.setOnClickListener(this);
             this.activity = activity;
             this.fragment = fragment;
+            this.data = data;
 
             listView = (ListView) itemView.findViewById(R.id.listview);
 
-            imageView = listView.findViewById(R.id.img_video_icon);
-            teacherNameView = listView.findViewById(R.id.tv_video_userName);
-            numOfShared = listView.findViewById(R.id.tv_video_comment);
+            imageView = (ImageView) itemView.findViewById(R.id.img_video_icon);
+            teacherNameView = (TextView) itemView.findViewById(R.id.tv_video_userName);
+            numOfShared = (TextView) itemView.findViewById(R.id.tv_video_comment);
 
         }
 
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(activity, CourseDetail.class);
+            int position = this.getAdapterPosition();
+            intent.putExtra("courseData", data.get(position));
             fragment.startActivity(intent);
             activity.overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
         }
@@ -88,8 +100,9 @@ public class AdapterHolder extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         CardView cardView;
         Activity activity;
         Fragment fragment;
+        ArrayList<Course> data;
 
-        public SecondTypeViewHolder(View itemView, Activity activity, Fragment fragment) {
+        public SecondTypeViewHolder(View itemView, Activity activity, Fragment fragment, ArrayList<Course> data) {
             super(itemView);
             this.courseName = (TextView) itemView.findViewById(R.id.coursename);
             this.description = (TextView) itemView.findViewById(R.id.description);
@@ -97,11 +110,14 @@ public class AdapterHolder extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             cardView.setOnClickListener(this);
             this.activity = activity;
             this.fragment = fragment;
+            this.data = data;
         }
 
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(activity, CourseDetail.class);
+            int position = this.getAdapterPosition();
+            intent.putExtra("courseData", data.get(position));
             fragment.startActivity(intent);
             activity.overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
         }
@@ -115,10 +131,10 @@ public class AdapterHolder extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         switch (viewType) {
             case Course.FIRST_TYPE:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.first_type, parent, false);
-                return new FirstTypeViewHolder(view, activity, fragment);
+                return new FirstTypeViewHolder(view, activity, fragment, dataSet);
             case Course.SECOND_TYPE:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.second_type, parent, false);
-                return new SecondTypeViewHolder(view, activity, fragment);
+                return new SecondTypeViewHolder(view, activity, fragment, dataSet);
 
         }
         return null;
@@ -140,6 +156,8 @@ public class AdapterHolder extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     }
 
+    @SuppressLint("ShowToast")
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int listPosition) {
         Course object = dataSet.get(listPosition);
@@ -155,22 +173,21 @@ public class AdapterHolder extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                     ((FirstTypeViewHolder) holder).courseName.setText(object.getName());
                     ((FirstTypeViewHolder) holder).description.setText(object.getDescription());
-                    Glide.with(activity).load("http://tang5618.com:8080/elearn/teachers/" + teacherId + "/photo")
-                            .into(((FirstTypeViewHolder) holder).imageView);
+                    String imageUrl = "http://tang5618.com:8080/elearn/teachers/" + teacherId + "/photo";
+
+                    Glide.with(activity).load(imageUrl).into(((FirstTypeViewHolder) holder).imageView);
                     ((FirstTypeViewHolder) holder).teacherNameView.setText(teacherName);
                     ((FirstTypeViewHolder) holder).numOfShared.setText(String.valueOf(enrollment));
 
                     ArrayList<String> datas = new ArrayList<String>();
 
-                    for (int m = 0; m < mArrayList.size(); m++) {
-                        if (mArrayList.get(m).getMediaType() == 0 && mArrayList.get(m).getMaterialType().equals("Lecture Video")) {
-                            String videoUrl = mArrayList.get(m).getMaterialUrl();
-                            datas.add(videoUrl);
-                        }
-                    }
+                    datas.add(mArrayList.get(0).getMaterialUrl());
 
                     VideoAdapter videoAdapter = new VideoAdapter(activity, datas, R.layout.item_video);
                     ((FirstTypeViewHolder) holder).listView.setAdapter(videoAdapter);
+
+
+
 
                     break;
                 case Course.SECOND_TYPE:
