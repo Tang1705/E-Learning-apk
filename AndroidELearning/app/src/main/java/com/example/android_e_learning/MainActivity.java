@@ -4,6 +4,7 @@ package com.example.android_e_learning;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -12,15 +13,18 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.tencent.tauth.UiError;
+
 import org.json.JSONObject;
 
 
 @SuppressLint("Registered")
-public class MainActivity extends AppCompatActivity implements QQLogInManager.QQLoginListener{
+public class MainActivity extends AppCompatActivity implements QQLogInManager.QQLoginListener {
 
     Button signInButton;
     Button logInButton;
@@ -41,10 +45,11 @@ public class MainActivity extends AppCompatActivity implements QQLogInManager.QQ
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
         final SharedPreferences sharedPreferences = getSharedPreferences("is_first_in_data", MODE_PRIVATE);
-        final MySharedPreferences mySharedPreferences=MySharedPreferences.getSharedPreferences(sharedPreferences);
+        final MySharedPreferences mySharedPreferences = MySharedPreferences.getSharedPreferences(sharedPreferences);
         mySharedPreferences.setIsFirstLogInOne();
 
         signInButton = (Button) findViewById(R.id.sign_in);
+        signInButton.setTextColor(Color.rgb(255, 255, 255));
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements QQLogInManager.QQ
         });
 
         logInButton = (Button) findViewById(R.id.log_in);
+        logInButton.setTextColor(Color.rgb(255, 255, 255));
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements QQLogInManager.QQ
         });
 
         qqLoginManager = new QQLogInManager("app_id", this);
-        qqButton=findViewById(R.id.qq);
+        qqButton = findViewById(R.id.qq);
         qqButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,22 +96,22 @@ public class MainActivity extends AppCompatActivity implements QQLogInManager.QQ
             }
         });
 
-        weiboButton = (ImageButton)findViewById(R.id.weibo);
+        weiboButton = (ImageButton) findViewById(R.id.weibo);
         weiboButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"This will be developed in " +
-                        "the future !",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "This will be developed in " +
+                        "the future !", Toast.LENGTH_SHORT).show();
 
             }
         });
 
-        wechatButton =(ImageButton)findViewById(R.id.wechat);
+        wechatButton = (ImageButton) findViewById(R.id.wechat);
         wechatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"This will be developed in " +
-                        "the future !",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "This will be developed in " +
+                        "the future !", Toast.LENGTH_SHORT).show();
             }
         });
     }

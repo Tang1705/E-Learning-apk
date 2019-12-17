@@ -118,7 +118,7 @@ public class HomeFragment extends Fragment {
                 String userId = teacherObject.getString("userid");
                 String courseId = teacherObject.getString("courseId");
                 String teacherName = teacherObject.getString("name");
-                String photo = teacherObject.getString("photo");
+                String photo = "http://tang5618.com:8080/elearn/teachers/" + userId + "/photo";
                 String telephone = teacherObject.getString("telephone");
                 String email = teacherObject.getString("email");
                 String teacherDescription = teacherObject.getString("description");
@@ -128,12 +128,11 @@ public class HomeFragment extends Fragment {
             }
 
             int courseType = -1;
-            if (mediaString.length()!=2) {
+            if (mediaString.length() != 2) {
                 if (materials.get(0).getMediaType() == 0) {
 
                     courseType = Course.FIRST_TYPE;
-                }
-                else
+                } else
                     courseType = Course.SECOND_TYPE;
 
             } else {

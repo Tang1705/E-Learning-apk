@@ -64,7 +64,7 @@ public class ListCourseActivity extends AppCompatActivity{
 
         assert searchManager != null;
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setQueryHint("Search Latest News...");
+        searchView.setQueryHint("Search Latest Courses...");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

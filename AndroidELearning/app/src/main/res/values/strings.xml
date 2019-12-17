@@ -18,9 +18,8 @@
     <string name="sign_in">sign in</string>
     <string name="log_in">log in</string>
     <string name="your_username">Your username</string>
-    <string name="welcome_to_e_learning">Welcome to E Learning</string>
+    <string name="welcome_to_e_learning">Welcome to E-Learning</string>
     <string name="your_password">Your password</string>
-    <string name="introduction">Introduction</string>
     <string name="title_activity_course_detail">CourseDetail</string>
     <string name="title_activity_log_in">LogInActivity</string>
     <string name="welcome_to_register_for_e_learning">Welcome to register for E-Learning</string>
@@ -35,5 +34,7 @@
     <string name="skip"><![CDATA[Skip >]]></string>
     <string name="start_the_journey_in_the_e_learning">Start the journey in the E-Learning</string>
     <string name="start_the_new_journey">Start the new journey</string>
+    <string name="teachers">Teachers</string>
+    <string name="introduction">Introduction</string>
 
 </resources>

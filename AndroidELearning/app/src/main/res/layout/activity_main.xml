@@ -28,7 +28,7 @@
                 android:layout_gravity="center"
                 android:text="@string/welcome_to_e_learning"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp" />
+                android:textSize="30sp" />
 
         </LinearLayout>
 
@@ -111,6 +111,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/buttonstyle"
                 android:text="@string/log_in"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
                 tools:ignore="ButtonStyle" />
 
             <Button
@@ -124,6 +126,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/buttonstyle"
                 android:text="@string/sign_in"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
                 tools:ignore="ButtonStyle" />
         </LinearLayout>
 
@@ -132,6 +136,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="20dp">
+
             <View
                 android:layout_width="70dp"
                 android:layout_height="1dip"
@@ -140,12 +145,14 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="5dp"
                 android:background="#83738F" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/third_party_login"
                 android:layout_gravity="center"
-                android:textColor="#ffffff"/>
+                android:text="@string/third_party_login"
+                android:textColor="#ffffff" />
+
             <View
                 android:layout_width="70dp"
                 android:layout_height="1dip"
@@ -161,26 +168,29 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="15dp">
+
             <ImageButton
                 android:id="@+id/wechat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="40dp"
                 android:background="#00FF0000"
-                android:src="@drawable/ic_wechat"/>
+                android:src="@drawable/ic_wechat" />
+
             <ImageButton
                 android:id="@+id/qq"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#00FF0000"
-                android:src="@drawable/ic_qq"/>
+                android:src="@drawable/ic_qq" />
+
             <ImageButton
                 android:id="@+id/weibo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
                 android:background="#00FF0000"
-                android:src="@drawable/ic_weibo"/>
+                android:src="@drawable/ic_weibo" />
         </LinearLayout>
     </LinearLayout>
 
