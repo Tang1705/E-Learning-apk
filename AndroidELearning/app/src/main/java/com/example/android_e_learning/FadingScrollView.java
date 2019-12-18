@@ -54,7 +54,6 @@ public class FadingScrollView extends ScrollView {
 //        oldl lodt 滑动前 xy 位置-----
         float fading = t>fadingHeight ? fadingHeight : (t > 30 ? t : 0);
         updateActionBarAlpha( fading / fadingHeight);
-
     }
 
     void updateActionBarAlpha(float alpha){

@@ -12,10 +12,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -40,6 +42,7 @@ public class CourseDetail extends AppCompatActivity {
     private TextView tDescriptionView;
     private TextView tEmailView;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,37 +138,6 @@ public class CourseDetail extends AppCompatActivity {
         fadingScrollView = (FadingScrollView) findViewById(R.id.nac_root);
         fadingScrollView.setFadingView(layout);
         fadingScrollView.setFadingHeightView(findViewById(R.id.nac_image));
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        MenuItem searchMenuItem = menu.findItem(R.id.action_search);
-
-        assert searchManager != null;
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setQueryHint("Search Latest Courses...");
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                if (query.length() > 2) {
-                    //onLoadingSwipeRefresh(query);
-                } else {
-                    //Toast.makeText(ListCourseActivity.this, "Type more than two letters!", Toast.LENGTH_SHORT).show();
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-        searchMenuItem.getIcon().setVisible(false, false);
-        return true;
     }
 
 

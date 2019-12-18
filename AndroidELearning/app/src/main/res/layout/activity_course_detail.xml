@@ -5,7 +5,6 @@
     android:id="@+id/activity_nac"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context="com.example.android_e_learning.CourseDetail">
 
     <com.example.android_e_learning.FadingScrollView
@@ -472,6 +471,14 @@
                     android:background="#00FF0000"
                     android:src="@drawable/ic_more" />
             </androidx.cardview.widget.CardView>
+
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="#00FF0000" />
 
 
         </LinearLayout>
