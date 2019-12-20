@@ -2,13 +2,20 @@ package com.example.android_e_learning.ui.home;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +24,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.android_e_learning.Course;
 import com.example.android_e_learning.GetByURL;
+import com.example.android_e_learning.ListCourseActivity;
 import com.example.android_e_learning.Material;
 import com.example.android_e_learning.R;
 import com.example.android_e_learning.Teacher;
@@ -27,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
 @SuppressLint("NewApi")
@@ -55,7 +64,40 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        setHasOptionsMenu(true);
+
         return recyclerView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+        SearchManager searchManager = (SearchManager) Objects.requireNonNull(getActivity()).getSystemService(Context.SEARCH_SERVICE);
+        final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        MenuItem searchMenuItem = menu.findItem(R.id.action_search);
+
+        assert searchManager != null;
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+        searchView.setQueryHint("Search Latest Courses...");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (query.length() > 2) {
+                    //onLoadingSwipeRefresh(query);
+                } else {
+                    Toast.makeText(getActivity(), "Type more than two letters!", Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        searchMenuItem.getIcon().setVisible(false, false);
     }
 
     private static ArrayList<Course> Analysis(String jsonStr)

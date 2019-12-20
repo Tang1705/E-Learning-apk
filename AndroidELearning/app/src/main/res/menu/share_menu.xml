@@ -5,12 +5,11 @@
     tools:context="com.example.android_e_learning.MainActivity">
 
     <item
-        android:id="@+id/action_search"
-        android:icon="@drawable/ic_search"
+        android:id="@+id/share"
+        android:icon="@drawable/ic_share"
         android:orderInCategory="100"
         android:theme="@android:style/Theme.Holo.Light.DarkActionBar"
-        android:title="Search"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:title="Share"
         app:showAsAction="collapseActionView|always" />
 
 </menu>

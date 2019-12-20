@@ -51,7 +51,7 @@ public class CourseDetail extends AppCompatActivity {
         setContentView(R.layout.activity_course_detail);
 
         Course course = (Course) getIntent().getSerializableExtra("courseData");
-        String courseName = course.getName();
+        final String courseName = course.getName();
         courseNameView = (TextView) findViewById(R.id.coursenamedetail);
         courseNameView.setText(courseName);
 
@@ -114,7 +114,8 @@ public class CourseDetail extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Share");
-                intent.putExtra(Intent.EXTRA_TEXT, "This is the share from E-Learn !");
+                intent.putExtra(Intent.EXTRA_TEXT, "I'm studying \"" + courseName + "\" " +
+                        "in E-Learning!\nLet's learn together.\nUrl:" + "http://tang5618.com/e-learning.apk");
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(Intent.createChooser(intent, "Please select the destination to share."));
             }
@@ -138,6 +139,16 @@ public class CourseDetail extends AppCompatActivity {
         fadingScrollView = (FadingScrollView) findViewById(R.id.nac_root);
         fadingScrollView.setFadingView(layout);
         fadingScrollView.setFadingHeightView(findViewById(R.id.nac_image));
+    }
+
+    protected void onPause() {
+
+        // TODO Auto-generated method stub
+
+        super.onPause();
+
+        overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
+
     }
 
 

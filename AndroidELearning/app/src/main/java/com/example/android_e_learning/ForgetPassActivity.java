@@ -51,4 +51,14 @@ public class ForgetPassActivity extends AppCompatActivity {
 
     }
 
+    protected void onPause() {
+
+        // TODO Auto-generated method stub
+
+        super.onPause();
+
+        overridePendingTransition(R.anim.out_alpha, R.anim.enter_alpha);
+
+    }
+
 }

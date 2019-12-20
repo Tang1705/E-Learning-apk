@@ -34,6 +34,7 @@ public class ToolsFragment extends Fragment {
         WebSettings webSettings = webView.getSettings();
         //允许javascript
         webSettings.setJavaScriptEnabled(true);
+
         return root;
     }
 }
