@@ -1,57 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/second_view"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/activity_horizontal_margin"
-    android:clickable="true"
-    android:foreground="?attr/selectableItemBackground"
-    app:cardCornerRadius="2dp"
-    app:cardElevation="5dp"
-    app:contentPadding="10dp"
-    app:cardUseCompatPadding="true"
-    app:cardPreventCornerOverlap="true"
-    android:focusable="true">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <data>
+        <variable
+            name="homeviewmodel"
+            type="com.example.android_e_learning.ui.home.HomeViewModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/second_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="5dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="10dp">
 
-    <TextView
-        android:id="@+id/coursename"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:textColor="#000000"
-        android:textSize="30sp"
-        android:padding="15dp"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/introduction"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/introduction"
-        android:layout_gravity="left"
-        android:textColor="#000000"
-        android:textSize="24sp"
-        android:padding="5dp"
-        />
+            <TextView
+                android:id="@+id/coursename"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:padding="15dp"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:text="@{homeviewmodel.course.name}"/>
 
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="#8B000000"
-        android:textSize="18sp"
-        android:padding="10dp"
-        />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/introduction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:padding="5dp"
+                android:text="@string/introduction"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:textColor="#8B000000"
+                android:textSize="18sp"
+                android:text="@{homeviewmodel.course.description}"/>
+        </LinearLayout>
 
 
-
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+</layout>

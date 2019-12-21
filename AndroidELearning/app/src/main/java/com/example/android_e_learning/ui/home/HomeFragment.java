@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,6 +30,7 @@ import com.example.android_e_learning.Material;
 import com.example.android_e_learning.R;
 import com.example.android_e_learning.Teacher;
 import com.example.android_e_learning.adapter.AdapterHolder;
+import com.example.android_e_learning.databinding.FragmentHomeBinding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,9 +47,8 @@ public class HomeFragment extends Fragment {
     @SuppressLint("NewApi")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        FragmentHomeBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         String tmp = GetByURL.readParse("http://47.94.107.165:8080/elearn/courses");
         ArrayList<Course> list = new ArrayList<>();
@@ -61,12 +62,12 @@ public class HomeFragment extends Fragment {
         adapter = new AdapterHolder(list, getActivity(), this);
 
 
-        recyclerView.setAdapter(adapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        binding.recyclerView.setAdapter(adapter);
+        binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         setHasOptionsMenu(true);
 
-        return recyclerView;
+        return binding.getRoot();
     }
 
     @Override

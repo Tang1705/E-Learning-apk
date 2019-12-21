@@ -8,10 +8,13 @@ package com.example.android_e_learning;
  * "certification":"BJTU","certificationDuration":"Forever"}
  */
 
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Course implements Serializable {
+public class Course extends BaseObservable implements Serializable {
     public static final int FIRST_TYPE = 0;
     public static final int SECOND_TYPE = 1;
 
@@ -64,137 +67,186 @@ public class Course implements Serializable {
         this.certification = certification;
         this.certificationDuration = certificationDuration;
         this.arrayList = arrayList;
-        this.mArrayList=mArrayList;
+        this.mArrayList = mArrayList;
 
     }
 
+    @Bindable
     public String getId() {
         return id;
     }
 
+    @Bindable
     public void setId(String id) {
         this.id = id;
+        notifyChange();
     }
 
+    @Bindable
     public String getName() {
         return name;
     }
 
+    @Bindable
     public void setName(String name) {
         this.name = name;
+        notifyChange();
     }
 
+    @Bindable
     public String getCode() {
         return code;
     }
 
+    @Bindable
     public void setCode(String code) {
         this.code = code;
+        notifyChange();
     }
 
+    @Bindable
     public String getCategoryId() {
         return categoryId;
     }
 
+    @Bindable
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
+        notifyChange();
     }
 
+    @Bindable
     public String getDescription() {
         return description;
     }
 
+    @Bindable
     public void setDescription(String description) {
         this.description = description;
+        notifyChange();
     }
 
+    @Bindable
     public int getPrice() {
         return price;
     }
 
+    @Bindable
     public void setPrice(int price) {
         this.price = price;
+        notifyChange();
     }
 
+    @Bindable
     public int getStatus() {
         return status;
     }
 
+    @Bindable
     public void setStatus(int status) {
         this.status = status;
+        notifyChange();
     }
 
+    @Bindable
     public String getOpenDate() {
         return openDate;
     }
 
+    @Bindable
     public void setOpenDate(String openDate) {
         this.openDate = openDate;
+        notifyChange();
     }
 
+    @Bindable
     public String getLastUpdate() {
         return lastUpdate;
     }
 
+    @Bindable
     public void setLastUpdate(String lastUpdate) {
         this.lastUpdate = lastUpdate;
+        notifyChange();
     }
 
+    @Bindable
     public int getLevel() {
         return level;
     }
 
+    @Bindable
     public void setLevel(int level) {
         this.level = level;
+        notifyChange();
     }
 
+    @Bindable
     public int getShared() {
         return shared;
     }
 
+    @Bindable
     public void setShared(int shared) {
         this.shared = shared;
+        notifyChange();
     }
 
+    @Bindable
     public String getSharedUrl() {
         return sharedUrl;
     }
 
+    @Bindable
     public void setSharedUrl(String sharedUrl) {
         this.sharedUrl = sharedUrl;
+        notifyChange();
     }
 
+    @Bindable
     public String getAvatar() {
         return avatar;
     }
 
+    @Bindable
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+        notifyChange();
     }
 
+    @Bindable
     public String getBigAvatar() {
         return bigAvatar;
     }
 
+    @Bindable
     public void setBigAvatar(String bigAvatar) {
         this.bigAvatar = bigAvatar;
+        notifyChange();
     }
 
+    @Bindable
     public String getCertification() {
         return certification;
     }
 
+    @Bindable
     public void setCertification(String certification) {
         this.certification = certification;
+        notifyChange();
     }
 
+    @Bindable
     public String getCertificationDuration() {
         return certificationDuration;
     }
 
+    @Bindable
     public void setCertificationDuration(String certificationDuration) {
         this.certificationDuration = certificationDuration;
+        notifyChange();
     }
+
 
     public int getType() {
         return type;
@@ -202,21 +254,28 @@ public class Course implements Serializable {
 
     public void setType(int type) {
         this.type = type;
+        notifyChange();
     }
 
+    @Bindable
     public ArrayList<Teacher> getArrayList() {
         return arrayList;
     }
 
+    @Bindable
     public void setArrayList(ArrayList<Teacher> arrayList) {
         this.arrayList = arrayList;
+        notifyChange();
     }
 
+    @Bindable
     public ArrayList<Material> getmArrayList() {
         return mArrayList;
     }
 
+    @Bindable
     public void setmArrayList(ArrayList<Material> mArrayList) {
         this.mArrayList = mArrayList;
+        notifyChange();
     }
 }

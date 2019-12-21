@@ -26,7 +26,7 @@ import com.bumptech.glide.Glide;
 
 import java.text.SimpleDateFormat;
 
-public class CourseDetail extends AppCompatActivity {
+public class CourseDetailActivity extends AppCompatActivity {
     private View layout;
     private FadingScrollView fadingScrollView;
     private ImageButton backButton;

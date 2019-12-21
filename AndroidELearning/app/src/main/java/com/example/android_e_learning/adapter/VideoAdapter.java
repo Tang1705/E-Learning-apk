@@ -15,7 +15,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 public class VideoAdapter extends CommonAdapter<String> {
     private Context mContext;
 
-    public VideoAdapter(Context context, List<String> datas, int layoutId) {
+    VideoAdapter(Context context, List<String> datas, int layoutId) {
         super(context, layoutId, datas);
         this.mContext = context;
 
