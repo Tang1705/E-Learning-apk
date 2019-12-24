@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.SearchManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,17 +39,37 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
 @SuppressLint("NewApi")
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+    private static final int REFRESH_COMPLETE = 0X110;
     AdapterHolder adapter;
+    private FragmentHomeBinding binding;
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
+                case REFRESH_COMPLETE:
+                    binding.swipeLy.setRefreshing(false);
+                    break;
+
+            }
+        }
+
+        ;
+    };
 
     @SuppressLint("NewApi")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        FragmentHomeBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
+        binding.swipeLy.setOnRefreshListener(this);
+        binding.swipeLy.setColorSchemeResources(R.color.colorPrimary);
+
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         String tmp = GetByURL.readParse("http://47.94.107.165:8080/elearn/courses");
@@ -60,7 +82,6 @@ public class HomeFragment extends Fragment {
         }
 
         adapter = new AdapterHolder(list, getActivity(), this);
-
 
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -191,5 +212,11 @@ public class HomeFragment extends Fragment {
         return list;
     }
 
+    public void onRefresh()
+    {
+
+        mHandler.sendEmptyMessageDelayed(REFRESH_COMPLETE, 2000);
+
+    }
 
 }

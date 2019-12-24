@@ -105,4 +105,13 @@ public class ShareFragment extends Fragment {
 
     }
 
+    private String getFilename() {
+        return "IMG_" + getId() + ".jpg";
+    }
+
+    public File getFile() {
+        File filesDir = getActivity().getFilesDir();
+        return new File(filesDir, getFilename());
+    }
+
 }
