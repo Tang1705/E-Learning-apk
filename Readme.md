@@ -4,6 +4,12 @@
 <div align=center><p><font size="2">小组成员：唐麒 汤新宇</font></p></div>
 ---
 
+你可以在以下地址观看项目视频
+
+- 项目视频
+http://47.94.107.165/app.mp4
+		
+
 <div align=left><p><font size="4"><b>1、UI设计</b></font></p></div>
 - Constraint layout
 
