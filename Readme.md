@@ -62,7 +62,7 @@ http://47.94.107.165/test.mp4
 
 <div align=left><p><font size="4"><b>2、功能说明</b></font></p></div>
 - 起始页面
-<img src="http://static.zybuluo.com/TangWill/rvbcy9m80ihyjn348efaz19u/01.jpg" alt="01"  width="15%" height="15%" />
+<div align="center"><img src="http://static.zybuluo.com/TangWill/rvbcy9m80ihyjn348efaz19u/01.jpg" alt="01"  width="15%" height="15%" /></div>
 ​		起始页面通过 animation 执行动画，向用户展示软件LOGO、名称和标语等宣传性信息。
 
 - 新手导航
@@ -86,7 +86,7 @@ http://47.94.107.165/test.mp4
 
 - 第三方登录
 
-<img src="http://static.zybuluo.com/TangWill/8s0gjk5ovqysn81h0dhcysh5/07.jpg" alt="07" width="15%" height="15%" />
+<div align="center"><img src="http://static.zybuluo.com/TangWill/8s0gjk5ovqysn81h0dhcysh5/07.jpg" alt="07" width="15%" height="15%" /></div>
 
 ​		该界面在通过腾讯开发者平台认证和项目申请后，通过腾讯提供的接口，实现第三方登录，获取的权限如下图所示：
 
