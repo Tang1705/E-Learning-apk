@@ -4,6 +4,7 @@ package com.example.android_e_learning;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -13,7 +14,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +21,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.tencent.tauth.UiError;
 
 import org.json.JSONArray;
@@ -43,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements QQLogInManager.QQ
     EditText usernameView;
     EditText passwordView;
 
+    MyReceiver dynamicReceiver  = new MyReceiver();
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
 
@@ -61,6 +62,10 @@ public class MainActivity extends AppCompatActivity implements QQLogInManager.QQ
 
         usernameView = (EditText) findViewById(R.id.username);
         passwordView = (EditText) findViewById(R.id.password);
+
+        IntentFilter dynamic_filter = new IntentFilter();
+        dynamic_filter.addAction("com.example.android_e_learning.myreceiver");
+        registerReceiver(dynamicReceiver, dynamic_filter);
 
         signInButton = (Button) findViewById(R.id.sign_in);
         signInButton.setTextColor(Color.rgb(255, 255, 255));
@@ -99,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements QQLogInManager.QQ
                             }).create();
                     dialog.show();
                 } else {
-                    String usersJson = GetByURL.readParse("http:tang5618.com:8080/elearn/customers");
+                    String usersJson = GetByURL.readParse("http://47.94.107.165:8080/elearn/customers");
                     try {
                         JSONArray users = new JSONArray(usersJson);
 
@@ -242,5 +247,11 @@ public class MainActivity extends AppCompatActivity implements QQLogInManager.QQ
     @Override
     public void onQQLoginError(UiError uiError) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(dynamicReceiver);
+        super.onDestroy();
     }
 }

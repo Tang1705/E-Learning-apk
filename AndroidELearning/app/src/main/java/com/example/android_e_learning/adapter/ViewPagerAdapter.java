@@ -7,10 +7,6 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import java.util.List;
 
-/**
- * Created by Administrator on 2019\1\4 0004.
- */
-
 public class ViewPagerAdapter extends PagerAdapter {
     private List<View> datas;
 

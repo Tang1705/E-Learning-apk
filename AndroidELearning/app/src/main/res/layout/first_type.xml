@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="homeviewmodel"
             type="com.example.android_e_learning.ui.home.HomeViewModel" />
@@ -63,7 +62,7 @@
                 android:id="@+id/listview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"></ListView>
+                android:orientation="vertical" />
 
             <View
                 android:layout_width="fill_parent"

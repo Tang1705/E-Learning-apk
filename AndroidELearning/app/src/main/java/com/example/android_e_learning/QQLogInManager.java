@@ -9,6 +9,7 @@ import com.tencent.connect.auth.QQToken;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
+import com.tencent.tauth.Tencent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -79,7 +80,7 @@ public class QQLogInManager {
 
     public void onActivityResultData(int requestCode, int resultCode, @Nullable Intent data) {
 
-        mTencent.onActivityResultData(requestCode, resultCode, data, localLoginListener);
+        Tencent.onActivityResultData(requestCode, resultCode, data, localLoginListener);
 
     }
 

@@ -23,6 +23,8 @@ public class LogInActivity extends AppCompatActivity {
     EditText passwordView;
     EditText confirmPasswordView;
     EditText emailView;
+    // The validator for the email input field.
+    private EmailValidator mEmailValidator;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -37,6 +39,10 @@ public class LogInActivity extends AppCompatActivity {
         passwordView = (EditText) findViewById(R.id.password);
         confirmPasswordView = (EditText) findViewById(R.id.confirmpass);
         emailView = (EditText) findViewById(R.id.email);
+        // Setup field validators.
+        mEmailValidator = new EmailValidator();
+        emailView.addTextChangedListener(mEmailValidator);
+
 
         confirmButton = (Button) findViewById(R.id.confirm);
         confirmButton.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +119,7 @@ public class LogInActivity extends AppCompatActivity {
                             }).create();
                     dialog.show();
                 } else {
-                    String result = GetByURL.readParse("http:tang5618.com:8080/elearn/" + username + "," + password + "," + email + ",");
+                    String result = GetByURL.readParse("http://47.94.107.165:8080/elearn/" + username + "," + password + "," + email + ",");
 
                     if (result.equals("1")) {
                         AlertDialog dialog = new AlertDialog.Builder(LogInActivity.this)

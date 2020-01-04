@@ -115,7 +115,7 @@ public class CourseDetailActivity extends AppCompatActivity {
                 intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Share");
                 intent.putExtra(Intent.EXTRA_TEXT, "I'm studying \"" + courseName + "\" " +
-                        "in E-Learning!\nLet's learn together.\nUrl:" + "http://tang5618.com/e-learning.apk");
+                        "in E-Learning!\nLet's learn together.\nUrl:" + "http://47.94.107.165/e-learning.apk");
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(Intent.createChooser(intent, "Please select the destination to share."));
             }
