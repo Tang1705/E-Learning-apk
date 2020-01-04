@@ -8,7 +8,10 @@
 
 - 项目视频
 http://47.94.107.165/app.mp4
-		
+
+
+- 测试视频
+http://47.94.107.165/test.mp4
 
 <div align=left><p><font size="4"><b>1、UI设计</b></font></p></div>
 - Constraint layout
